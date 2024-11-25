@@ -17,18 +17,20 @@ int minsNewYear(int *hour, int *min) {
 
 //
 double probability(int *A, int *B) {
-    int wins = 0, total = 36;
-    for (int dilya = 1; dilya <= 6; ++dilya) {
-        for (int ali = 1; ali <= 6; ++ali) {
-            for (int bek = 1; bek <= 6; ++bek) {
-                if (dilya >= ali && dilya >= bek && (dilya > ali || dilya > bek)) {
-                    wins++;
-                }
-            }
-        }
-    }
-    return static_cast<double>(wins) / total;
+    int aliRoll = *A;
+    int bekRoll = *B;
+    double higherThanAli = (6.0 - aliRoll) / 6.0;
+    double higherThanBek = (6.0 - bekRoll) / 6.0;
+
+    double tieWithAli = 1.0 / 6.0;
+    double tieWithBek = 1.0 / 6.0;
+    double winHigher = higherThanAli * higherThanBek;
+    double winTieAli = tieWithAli * higherThanBek;
+    double winTieBek = tieWithBek * higherThanAli;
+    double winTieBoth = tieWithAli * tieWithBek;
+    return winHigher + winTieAli + winTieBek + winTieBoth;
 }
+
 
 // Problem 5
 int presses(int *x) {
